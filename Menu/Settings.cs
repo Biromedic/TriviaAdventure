@@ -13,3 +13,4 @@ public class Settings : MonoBehaviour
         musicButton.gameObject.SetActive(isSettingsOpen);
     }
 }
+

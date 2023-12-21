@@ -1,11 +1,12 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerDownHandler
 {
+    public List<GameObject> ShapeSquares { get; set; }
+    public int ShapeRow { get; set; }
+    public int ShapeColumn { get; set; }
     public GameObject squareShapeImage;
     public Vector3 shapeSelectedScale;
     public Vector2 offset = new Vector2(0f, 0f);
@@ -17,7 +18,6 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IBe
     private List<GameObject> _currentShape = new List<GameObject>();
     private Vector3 _shapeStartScale;
     private RectTransform _transform;
-    private bool _shapeDraggable = true;
     private Canvas _canvas;
     private Vector3 _startPosition;
     private bool _shapeActive = true;
@@ -27,7 +27,6 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IBe
         _shapeStartScale = GetComponent<RectTransform>().localScale;
         _transform = GetComponent<RectTransform>();
         _canvas = GetComponentInParent<Canvas>();
-        _shapeDraggable = true;
         _startPosition = _transform.localPosition;
         _shapeActive = true;
     }
@@ -51,21 +50,23 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IBe
 
     public bool IsAnyOfShapeSquareActive()
     {
-        foreach(var square in _currentShape)
+        foreach (var square in _currentShape)
         {
-            if(square.gameObject.activeSelf)
+            if (square.gameObject.activeSelf)
             {
+                Debug.Log("Square in shape is active");
                 return true;
             }
         }
+        Debug.Log("No active squares in shape");
         return false;
     }
 
     public void DeactivateShape()
     {
-        if(_shapeActive)
+        if (_shapeActive)
         {
-            foreach(var square in _currentShape)
+            foreach (var square in _currentShape)
             {
                 square?.GetComponent<ShapeSquare>().DeactivateShape();
             }
@@ -75,9 +76,9 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IBe
 
     private void SetShapeInactive()
     {
-        if(IsOnStartPosition() == false && IsAnyOfShapeSquareActive())
+        if (IsOnStartPosition() == false && IsAnyOfShapeSquareActive())
         {
-            foreach(var square in _currentShape)
+            foreach (var square in _currentShape)
             {
                 square.gameObject.SetActive(false);
             }
@@ -194,8 +195,6 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IBe
         return shiftOnY;
     }
 
-
-
     private float GetXPositionForShapeSquare(ShapeData shape, int column, Vector2 moveDistance)
     {
         float shiftOnX = 0f;
@@ -279,17 +278,6 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IBe
         _transform.localScale = shapeSelectedScale;
     }
 
-    /*public void OnDrag(PointerEventData eventData)
-    {
-        _transform.anchorMin = new Vector2(0, 0);
-        _transform.anchorMax = new Vector2(0, 0);
-        _transform.pivot = new Vector2(0, 0);
-
-        Vector2 pos;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(_canvas.transform as RectTransform, eventData.position, Camera.main, out pos);
-        _transform.localPosition = (pos + offset);
-    }*/
-
     public void OnDrag(PointerEventData eventData)
     {
         Vector2 mousePosition = eventData.position;
@@ -298,8 +286,7 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IBe
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        //_transform.localScale = _shapeStartScale;
-        this.GetComponent<RectTransform>().localScale = _shapeStartScale;
+        _transform.localScale = _shapeStartScale;
         GameEvent.CheckIfShapeCanBePlaced();
     }
 

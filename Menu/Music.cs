@@ -5,19 +5,30 @@ public class Music : MonoBehaviour
 {
     public AudioSource music; // Assign this in the Inspector
 
-    private bool isMusicPlaying = false;
+    private bool isMusicPlaying;
+    public GameObject MusicButtonSlash;
+
+    void Start()
+    {
+        isMusicPlaying = true;
+    }
 
     public void MusicCloser()
     {
-        isMusicPlaying = !isMusicPlaying;
-
-        if (isMusicPlaying)
+        if (isMusicPlaying == false)
         {
             music.Play();
+            //hide the MusicButtonSlash object  
+            //MusicButtonSlash.gameObject.SetActive(false);     
+            isMusicPlaying = true;
         }
         else
         {
-            music.Pause();
+            music.Stop();
+            //show the MusicButtonSlash object
+            //MusicButtonSlash.gameObject.SetActive(false);
+            isMusicPlaying = false;
         }
     }
 }
+
