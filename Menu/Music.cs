@@ -18,17 +18,16 @@ public class Music : MonoBehaviour
         if (isMusicPlaying == false)
         {
             music.Play();
-            //hide the MusicButtonSlash object  
-            //MusicButtonSlash.gameObject.SetActive(false);     
+            // Hide the MusicButtonSlash object
+            MusicButtonSlash.SetActive(false);
             isMusicPlaying = true;
         }
         else
         {
             music.Stop();
-            //show the MusicButtonSlash object
-            //MusicButtonSlash.gameObject.SetActive(false);
+            // Show the MusicButtonSlash object
+            MusicButtonSlash.SetActive(true); // To make it visible
             isMusicPlaying = false;
         }
     }
 }
-

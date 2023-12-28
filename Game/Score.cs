@@ -39,10 +39,10 @@ public class Score : MonoBehaviour
         SaveScore();
 
         // Check if the player has reached 100 points
-        if (currentScore >= 100)
+        /*if (currentScore >= 100)
         {
             Congratulations(); // Call the Congratulations method
-        }
+        }*/
     }
 
     // Method to update the score text on the UI

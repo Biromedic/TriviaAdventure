@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Grid_Code : MonoBehaviour
 {
     public ShapeStorage shapeStorage;
+    public Text scoreText;
     public int columns = 0;
     public int rows = 0;
     public float squaresGap = 0.1f;
@@ -174,6 +176,8 @@ public class Grid_Code : MonoBehaviour
     {
         List<int[]> lines = new List<int[]>();
 
+        //int counter = 0;
+
         // Columns
         for (int column = 0; column < 9; column++)
         {
@@ -215,11 +219,36 @@ public class Grid_Code : MonoBehaviour
 
         int completedLines = CheckIfSquaresCompleted(lines);
 
-        if (completedLines > 2)
+        if (completedLines >= 2)
         {
             // TODO: Play bonus animation
+            GameEvent.ShowCongrulationWritings();
         }
-
+        /*else if (scoreText.text == "50" && counter == 0)
+        {
+            GameEvent.ShowCongrulationWritings();
+            counter++;
+        }
+        else if(scoreText.text == "100" && counter == 1)
+        {
+            GameEvent.ShowCongrulationWritings();
+            counter++;
+        }
+        else if(scoreText.text == "150" && counter == 2)
+        {
+            GameEvent.ShowCongrulationWritings();
+            counter++;
+        }
+        else if(scoreText.text == "200" && counter == 3)
+        {
+            GameEvent.ShowCongrulationWritings();
+            counter++;
+        }
+        else if(scoreText.text == "250" && counter == 4)
+        {
+            GameEvent.ShowCongrulationWritings();
+            counter++;
+        }*/
         // Add Scores
         int totalScores = completedLines * 10;
         GameEvent.AddScores(totalScores);

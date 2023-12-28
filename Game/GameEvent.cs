@@ -14,4 +14,5 @@ public class GameEvent : MonoBehaviour
     public static Action RequestNewShapes;
 
     public static Action SetShapeInactive;
+    public static Action ShowCongrulationWritings;
 }
